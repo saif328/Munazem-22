@@ -1,0 +1,233 @@
+{
+  "entities": {
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Authenticated student academic profile and routine preferences",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "educationalStage": { "type": "string" },
+        "grade": { "type": "string" },
+        "school": { "type": "string" },
+        "governorate": { "type": "string" },
+        "studyGoal": { "type": "string" },
+        "wakeTimeMinutes": { "type": "integer" },
+        "sleepTimeMinutes": { "type": "integer" },
+        "schoolStartMinutes": { "type": "integer" },
+        "schoolEndMinutes": { "type": "integer" },
+        "commuteMinutes": { "type": "integer" },
+        "mealBreakMinutes": { "type": "integer" },
+        "xp": { "type": "integer" },
+        "level": { "type": "integer" },
+        "currentStreakDays": { "type": "integer" },
+        "longestStreakDays": { "type": "integer" },
+        "unlockedBadgesCsv": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "educationalStage", "grade", "school", "studyGoal", "wakeTimeMinutes", "sleepTimeMinutes", "xp", "level", "createdAt", "updatedAt"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Student subject metadata and progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "colorHex": { "type": "string" },
+        "difficulty": { "type": "integer" },
+        "priority": { "type": "integer" },
+        "studyMinutesLogged": { "type": "integer" },
+        "notesSummary": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "colorHex", "difficulty", "priority", "studyMinutesLogged", "createdAt", "updatedAt"]
+    },
+    "LessonTask": {
+      "title": "LessonTask",
+      "description": "Lesson, assignment, or revision task inside a subject",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "unitName": { "type": "string" },
+        "chapterName": { "type": "string" },
+        "title": { "type": "string" },
+        "partLabel": { "type": "string" },
+        "kind": { "type": "string", "enum": ["LESSON", "ASSIGNMENT", "REVISION"] },
+        "status": { "type": "string", "enum": ["NOT_STARTED", "IN_PROGRESS", "COMPLETED", "NEEDS_REVIEW", "POSTPONED"] },
+        "estimatedMinutes": { "type": "integer" },
+        "actualMinutes": { "type": "integer" },
+        "pagesCount": { "type": "integer" },
+        "questionsSolved": { "type": "integer" },
+        "comprehensionPercent": { "type": "integer" },
+        "difficultyOrImportance": { "type": "integer" },
+        "delayReason": { "type": "string" },
+        "completionNotes": { "type": "string" },
+        "startDateEpochDay": { "type": "integer" },
+        "dueDateEpochDay": { "type": "integer" },
+        "nextReviewEpochDay": { "type": "integer" },
+        "reviewStage": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subjectId", "title", "kind", "status", "estimatedMinutes", "actualMinutes", "difficultyOrImportance", "reviewStage", "createdAt", "updatedAt"]
+    },
+    "ScheduleBlock": {
+      "title": "ScheduleBlock",
+      "description": "Daily or weekly scheduled time block",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dayOfWeek": { "type": "integer" },
+        "specificDateEpochDay": { "type": "integer" },
+        "title": { "type": "string" },
+        "category": { "type": "string", "enum": ["SCHOOL", "PRIVATE_LESSON", "STUDY", "BREAK", "MEAL", "SLEEP", "HOLIDAY", "PERSONAL"] },
+        "subjectId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "startMinutes": { "type": "integer" },
+        "endMinutes": { "type": "integer" },
+        "fixed": { "type": "boolean" },
+        "completed": { "type": "boolean" },
+        "orderIndex": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dayOfWeek", "title", "category", "startMinutes", "endMinutes", "fixed", "completed", "orderIndex", "createdAt", "updatedAt"]
+    },
+    "Exam": {
+      "title": "Exam",
+      "description": "Upcoming or completed exam record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "examDateEpochDay": { "type": "integer" },
+        "timeMinutes": { "type": "integer" },
+        "requiredParts": { "type": "string" },
+        "readinessPercent": { "type": "integer" },
+        "achievedScore": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "revisionPlanSummary": { "type": "string" },
+        "reminderEnabled": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "subjectId", "examDateEpochDay", "timeMinutes", "readinessPercent", "maxScore", "reminderEnabled", "createdAt", "updatedAt"]
+    },
+    "FocusSession": {
+      "title": "FocusSession",
+      "description": "Completed Pomodoro or custom focus study session",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "breakMinutes": { "type": "integer" },
+        "mode": { "type": "string", "enum": ["POMODORO", "CUSTOM"] },
+        "completedAtEpochMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "durationMinutes", "breakMinutes", "mode", "completedAtEpochMs", "createdAt", "updatedAt"]
+    },
+    "StudyNote": {
+      "title": "StudyNote",
+      "description": "Personal study note or saved link",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "linkUrl": { "type": "string" },
+        "attachmentType": { "type": "string", "enum": ["NONE", "PDF", "IMAGE", "LINK"] },
+        "important": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "content", "attachmentType", "important", "createdAt", "updatedAt"]
+    },
+    "HolidayOrBreak": {
+      "title": "HolidayOrBreak",
+      "description": "Registered holiday, no-lesson day, or special event",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dateEpochDay": { "type": "integer" },
+        "title": { "type": "string" },
+        "kind": { "type": "string", "enum": ["HOLIDAY", "NO_LESSONS", "SPECIAL_EVENT"] },
+        "blockAllStudy": { "type": "boolean" },
+        "startMinutes": { "type": "integer" },
+        "endMinutes": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateEpochDay", "title", "kind", "blockAllStudy", "createdAt", "updatedAt"]
+    },
+    "DailyTask": {
+      "title": "DailyTask",
+      "description": "Student daily checklist task for a specific calendar day",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "dateEpochDay": { "type": "integer" },
+        "scheduledStartMinutes": { "type": "integer" },
+        "estimatedMinutes": { "type": "integer" },
+        "priority": { "type": "integer" },
+        "completed": { "type": "boolean" },
+        "completedAtEpochMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "dateEpochDay", "estimatedMinutes", "priority", "completed", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/profile/{docId}": {
+      "schema": { "$ref": "#/entities/StudentProfile" },
+      "description": "Student profile and routine preferences owned by userId"
+    },
+    "/users/{userId}/subjects/{subjectId}": {
+      "schema": { "$ref": "#/entities/Subject" },
+      "description": "Student subjects owned by userId"
+    },
+    "/users/{userId}/lessons/{lessonId}": {
+      "schema": { "$ref": "#/entities/LessonTask" },
+      "description": "Subject lessons, assignments, and revisions owned by userId"
+    },
+    "/users/{userId}/schedule_blocks/{blockId}": {
+      "schema": { "$ref": "#/entities/ScheduleBlock" },
+      "description": "Daily and weekly study schedule blocks owned by userId"
+    },
+    "/users/{userId}/exams/{examId}": {
+      "schema": { "$ref": "#/entities/Exam" },
+      "description": "Student exams and scores owned by userId"
+    },
+    "/users/{userId}/focus_sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/FocusSession" },
+      "description": "Completed Pomodoro focus sessions owned by userId"
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": { "$ref": "#/entities/StudyNote" },
+      "description": "Personal study notes and links owned by userId"
+    },
+    "/users/{userId}/holidays/{holidayId}": {
+      "schema": { "$ref": "#/entities/HolidayOrBreak" },
+      "description": "Registered holidays, breaks, and special events owned by userId"
+    },
+    "/users/{userId}/daily_tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/DailyTask" },
+      "description": "Daily checklist tasks for a specific day owned by userId"
+    }
+  }
+}

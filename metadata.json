@@ -1,0 +1,6 @@
+{
+  "name": "MUNAZZEM STUDY PRO",
+  "description": "مُنظِّم — مساعد الطالب الذكي لتنظيم اليوم وجدول المذاكرة والمتراكم والتركيز بالذكاء الاصطناعي",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
