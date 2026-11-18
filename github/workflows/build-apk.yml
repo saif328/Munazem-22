@@ -3,33 +3,30 @@ name: Build Android APK
 on:
 workflow_dispatch:
 push:
-branches: [ main ]
-
-permissions:
-contents: read
-actions: read
+branches:
+- main
 
 jobs:
 build:
 runs-on: ubuntu-latest
 
 steps:
-  - name: Checkout source
+  - name: Checkout
     uses: actions/checkout@v4
 
-  - name: Set up JDK 17
+  - name: Setup Java
     uses: actions/setup-java@v4
     with:
       distribution: temurin
       java-version: '17'
 
-  - name: Set up Gradle
+  - name: Setup Gradle
     uses: gradle/actions/setup-gradle@v4
     with:
-      gradle-version: '9.3.1'
+      gradle-version: '8.9'
 
   - name: Build APK
-    run: gradle --no-daemon assembleDebug
+    run: gradle assembleDebug
 
   - name: Upload APK
     uses: actions/upload-artifact@v4
@@ -37,4 +34,3 @@ steps:
       name: MUNAZZEM-STUDY-PRO-APK
       path: app/build/outputs/apk/debug/*.apk
       if-no-files-found: error
-      retention-days: 7
