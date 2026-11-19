@@ -1,33 +1,37 @@
 name: Build MUNAZZEM APK
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+workflow_dispatch:
+push:
+branches:
+- main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+build:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '17'
 
-      - name: Build APK
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
+  - name: Setup Gradle
+    uses: gradle/actions/setup-gradle@v4
+    with:
+      gradle-version: '9.3.1'
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: MUNAZZEM-APK
-          path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
+  - name: Build APK
+    run: gradle --no-daemon assembleDebug
+
+  - name: Upload APK
+    uses: actions/upload-artifact@v4
+    with:
+      name: MUNAZZEM-APK
+      path: app/build/outputs/apk/debug/*.apk
+      if-no-files-found: error
+      retention-days: 7
